@@ -37,6 +37,3 @@ RUN GCC=/usr/bin/x86_64-linux-gnu- GCC_SUFFIX=-8 CC=${GCC}gcc${GCC_SUFFIX} CXX=$
     && cmake -S /tmp/protobuf-3.9.1/cmake -B /tmp/protobuf-3.9.1/build/release -Dprotobuf_BUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=${CC} -DCMAKE_C_COMPILER_AR=${AR} -DCMAKE_C_COMPILER_RANLIB=${RANLIB} -DCMAKE_CXX_COMPILER=${CXX} -DCMAKE_CXX_COMPILER_AR=${AR} -DCMAKE_CXX_COMPILER_RANLIB=${RANLIB} && make -C /tmp/protobuf-3.9.1/build/release all -j -l50 && make -C /tmp/protobuf-3.9.1/build/release install -j -l50  \
     && cp /tmp/protobuf-targets-debug.cmake /usr/local/lib/cmake/protobuf/protobuf-targets-debug.cmake \
 	&& rm -rf /tmp/protobuf*
-
-LABEL version="1.0.0"
-LABEL release-date="2019-08-30"
