@@ -38,5 +38,5 @@ RUN GCC=/usr/bin/x86_64-linux-gnu- GCC_SUFFIX=-8 CC=${GCC}gcc${GCC_SUFFIX} CXX=$
     && cp /tmp/protobuf-targets-debug.cmake /usr/local/lib/cmake/protobuf/protobuf-targets-debug.cmake \
 	&& rm -rf /tmp/protobuf*
 
-LABEL version="0.0.0"
+LABEL version="1.0.0"
 LABEL release-date="2019-08-30"
