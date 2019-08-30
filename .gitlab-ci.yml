@@ -1,0 +1,34 @@
+stages:
+  - deploy
+
+.template: &build_template
+  stage: deploy
+  image: docker:latest
+  tags:
+    - docker
+    - shared
+  before_script:
+    - docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD}
+  script:
+    - docker build -f ${DOCKERFILE} -t ${CONTAINER_NAME} .
+    - export target_version=$(docker inspect --format='{{index .Config.Labels "version" }}' ${CONTAINER_NAME})
+    - docker tag ${CONTAINER_NAME} ${CONTAINER_NAME}:${target_version}
+    - docker tag ${CONTAINER_NAME}:${target_version} ${CONTAINER_NAME}:latest
+    - docker push ${CONTAINER_NAME}:${target_version}
+    - docker push ${CONTAINER_NAME}:latest
+  after_script:
+    - docker logout
+    - docker rmi ${CONTAINER_NAME}
+
+build:
+  <<: *build_template
+  environment:
+    name: snapshot
+    url: https://cloud.docker.com/repository/docker/benwaumans/ubuntu-gcc-8
+  variables:
+    DOCKERFILE: Dockerfile
+    CONTAINER_NAME: "ubuntu-gcc-8"
+    PORT: "5000"
+  except:
+    - master
+    - tags
